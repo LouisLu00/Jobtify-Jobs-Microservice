@@ -13,19 +13,19 @@ import lombok.Setter;
 public class Job {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int jobId;
+  private Long jobId;
 
   private boolean publicView;
 
-  private String Company;
+  private String company;
 
-  private String Title;
+  private String title;
 
-  private String Description;
+  private String description;
 
-  private double Salary;
+  private double salary;
 
-  private String Location;
+  private String location;
 
-  private String Industry;
+  private String industry;
 }
