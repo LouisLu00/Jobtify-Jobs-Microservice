@@ -10,22 +10,22 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Jobs {
+public class Job {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int jobId;
 
   private boolean publicView;
 
-  private String company;
+  private String Company;
 
-  private String jobTitle;
+  private String Title;
 
-  private String description;
+  private String Description;
 
-  private double minSalary;
+  private double Salary;
 
-  private double maxSalary;
+  private String Location;
 
-  private String officeLocation;
+  private String Industry;
 }
