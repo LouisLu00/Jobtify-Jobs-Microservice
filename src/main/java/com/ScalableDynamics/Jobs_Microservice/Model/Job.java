@@ -4,28 +4,32 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-public class Jobs {
+@AllArgsConstructor
+@NoArgsConstructor
+public class Job {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int jobId;
+  private Long jobId;
 
   private boolean publicView;
 
   private String company;
 
-  private String jobTitle;
+  private String title;
 
   private String description;
 
-  private double minSalary;
+  private double salary;
 
-  private double maxSalary;
+  private String location;
 
-  private String officeLocation;
+  private String industry;
 }
