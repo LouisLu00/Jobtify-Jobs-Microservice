@@ -1,11 +1,16 @@
 # Jobtify-Jobs-Microservice
-Repository for Jobs Microservice of Jobtify
+The jobs microservices is built by SpringBoot with Maven and hosted on AWS. 
 
 ## Database Connection
 - This project uses MySQL Database powered by AWS RDS.
 - To run the application locally, an .env file containing the database connection credentials needs to be created at the root directory of the project.
 
 ## Endpoints
+This project uses `springdoc-openapi` for generating and displaying API documentation. By default, you can access the OpenAPI JSON and Swagger UI at the following paths:
+
+- **OpenAPI JSON**: `/api-docs`
+- **Swagger UI**: `/swagger-ui`
+
 ### Get All Jobs
 
 - **URL**: `/api/jobs`
@@ -103,3 +108,6 @@ The `Job` object has the following fields:
    ```bash
    mvn spring-boot:run
    ```
+   
+## AWS Hosting 
+
