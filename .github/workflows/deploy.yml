@@ -30,7 +30,7 @@ jobs:
           REGISTRY_USERNAME: ${{ secrets.DOCKER_EMAIL }}
           REGISTRY_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
-          ./mvnw compile jib:build \
+          mvn compile jib:build \
             -Dimage=louislu00/jobs-microservice:latest \
             -Dregistry.username=$REGISTRY_USERNAME \
             -Dregistry.password=$REGISTRY_PASSWORD
