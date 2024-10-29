@@ -93,6 +93,20 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>3.3.1</version>
+				<configuration>
+					<to>
+						<image>louislu00/jobs-microservice:latest</image>
+						<auth>
+							<username>${env.DOCKER_USERNAME}</username>
+							<password>${env.DOCKER_PASSWORD}</password>
+						</auth>
+					</to>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 	<repositories>
