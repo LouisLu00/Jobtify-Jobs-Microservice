@@ -18,12 +18,12 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build with Maven
-        env:
-          DB_URL: ${{ secrets.DB_URL }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        run: mvn -B package --file pom.xml
+#      - name: Build with Maven
+#        env:
+#          DB_URL: ${{ secrets.DB_URL }}
+#          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+#          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+#        run: mvn -B package --file pom.xml
 
       - name: Build and Push Docker Image with Jib
         env:
