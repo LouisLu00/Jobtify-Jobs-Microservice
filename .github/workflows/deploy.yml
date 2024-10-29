@@ -31,7 +31,7 @@ jobs:
           REGISTRY_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           mvn compile jib:build \
-            -Dimage=louislu00/jobs-microservice:latest \
+            -Dimage=louislu000/jobs-microservice:latest \
             -Dregistry.username=$REGISTRY_USERNAME \
             -Dregistry.password=$REGISTRY_PASSWORD
 
