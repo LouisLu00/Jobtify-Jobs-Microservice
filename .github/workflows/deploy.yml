@@ -32,8 +32,8 @@ jobs:
         run: |
           mvn compile jib:build \
             -Dimage=louislu000/jobs-microservice:latest \
-            -Dregistry.username=$REGISTRY_USERNAME \
-            -Dregistry.password=$REGISTRY_PASSWORD
+            -Djib.to.auth.username=$REGISTRY_USERNAME \
+            -Djib.to.auth.password=$REGISTRY_PASSWORD
 
       - name: Deploy to EC2
         env:
