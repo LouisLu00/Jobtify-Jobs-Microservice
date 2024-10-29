@@ -1,0 +1,53 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Java environment
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+
+      - name: Build and Push Docker Image with Jib
+        env:
+          REGISTRY_USERNAME: ${{ secrets.DOCKER_EMAIL }}
+          REGISTRY_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          ./mvnw compile jib:build \
+            -Dimage=louislu00/jobs-microservice:latest \
+            -Dregistry.username=$REGISTRY_USERNAME \
+            -Dregistry.password=$REGISTRY_PASSWORD
+
+      - name: Deploy to EC2
+        env:
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+          CONTAINER_IMAGE: louislu00/jobs-microservice:latest
+          DB_URL: ${{ secrets.DB_URL }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@$EC2_HOST << 'EOF'
+            # Pull the latest image from Docker Hub
+            docker pull $CONTAINER_IMAGE
+
+            # Stop and remove any existing container
+            docker stop my-spring-app || true
+            docker rm my-spring-app || true
+
+            # Run the new container with environment variables
+            docker run -d --name my-spring-app -p 8080:8080 \
+              -e DB_URL=$DBURL \
+              -e DB_USERNAME=$DB_USERNAME \
+              -e DB_PASSWORD=$DB_PASSWORD \
+              $CONTAINER_IMAGE
+          EOF
