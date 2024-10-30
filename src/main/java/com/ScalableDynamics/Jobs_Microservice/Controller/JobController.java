@@ -291,7 +291,7 @@ public class JobController {
           )
   })
   @GetMapping("/status/{id}")
-  public ResponseEntity<String> getJobStatus(@PathVariable Long id) {
+  public ResponseEntity<?> getJobStatus(@PathVariable Long id) {
     Optional<Job> job = jobService.getJobById(id);
     return job.map(j -> ResponseEntity.ok(j.getStatus()))
             .orElseGet(() -> ResponseEntity.notFound().build());

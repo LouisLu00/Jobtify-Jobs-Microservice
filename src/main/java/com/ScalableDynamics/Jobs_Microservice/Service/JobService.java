@@ -44,11 +44,11 @@ public class JobService {
   @Transactional
   public void updateJobApplicantCountAsync(Job job, String callbackUrl) {
     // Save initial job data
-    job.setStatus("PENDING");
+    job.setStatus(Job.Status.PENDING);
     Job savedJob = jobRepository.save(job);
 
     savedJob.setApplicantCount(savedJob.getApplicantCount() + 1);
-    savedJob.setStatus("COMPLETED");
+    savedJob.setStatus(Job.Status.ACTIVE);
     jobRepository.save(savedJob);
 
     if (callbackUrl != null && !callbackUrl.isEmpty()) {
