@@ -10,7 +10,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +44,11 @@ public class JobController {
   @PostMapping
   public ResponseEntity<Job> addJob(@RequestBody Job job) {
     Job newJob = jobService.addJob(job);
-    return ResponseEntity.ok(newJob);
+    URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+            .path("/{id}")
+            .buildAndExpand(newJob.getJobId())
+            .toUri();
+    return ResponseEntity.created(location).body(newJob);
   }
 
   @Operation(summary = "Update a job", description = "Update an existing job listing by ID")
