@@ -3,10 +3,10 @@ name: Deploy to EC2
 on:
   push:
     branches:
-      - deploy
+      - main
 
 jobs:
-  deploy:
+  dockerhub-upload:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,11 +28,15 @@ jobs:
             -Djib.to.auth.username=$REGISTRY_USERNAME \
             -Djib.to.auth.password=$REGISTRY_PASSWORD
 
+      
+
+  deploy:
+    - runs-on: ubuntu-latest
+    - steps:
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
-
 #      - name: Deploy to EC2
 #        env:
 #          EC2_HOST: ${{ secrets.EC2_HOST }}
