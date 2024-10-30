@@ -1,4 +1,4 @@
-name: Deploy to EC2
+name: DockerHub-Upload
 
 on:
   push:
@@ -28,27 +28,4 @@ jobs:
             -Djib.to.auth.username=$REGISTRY_USERNAME \
             -Djib.to.auth.password=$REGISTRY_PASSWORD
 
-      
-
-  deploy:
-    - runs-on: ubuntu-latest
-    - steps:
-      - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
-#      - name: Deploy to EC2
-#        env:
-#          EC2_HOST: ${{ secrets.EC2_HOST }}
-#          CONTAINER_IMAGE: louislu000/jobs-microservice:latest
-#        run: |
-#          ssh -o StrictHostKeyChecking=no ubuntu@$EC2_HOST << 'EOF'
-#            docker pull $CONTAINER_IMAGE
-#            docker stop my-spring-app || true
-#            docker rm my-spring-app || true
-#            docker run -d --name my-spring-app -p 8080:8080 \
-#              -e DB_URL=$DB_URL \
-#              -e DB_USERNAME=$DB_USERNAME \
-#              -e DB_PASSWORD=$DB_PASSWORD \
-#              $CONTAINER_IMAGE
-#          EOF
+    
