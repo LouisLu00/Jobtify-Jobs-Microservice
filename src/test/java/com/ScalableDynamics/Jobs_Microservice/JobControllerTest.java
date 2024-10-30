@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -36,12 +39,16 @@ public class JobControllerTest {
     Job job1 = new Job(1L, true, "Tech Corp", "Software Engineer", "Develops software", 120000, "New York", "IT");
     Job job2 = new Job(2L, true, "Product Corp", "Product Manager", "Manages products", 110000, "San Francisco", "IT");
 
-    when(jobService.getAllJobs()).thenReturn(Arrays.asList(job1, job2));
+    // Mock paginated response
+    Pageable pageable = PageRequest.of(0, 10); // Page 0 with a size of 10
+    PageImpl<Job> pagedJobs = new PageImpl<>(Arrays.asList(job1, job2), pageable, 2);
 
-    mockMvc.perform(get("/api/jobs"))
+    when(jobService.getAllJobs(pageable)).thenReturn(pagedJobs);
+
+    mockMvc.perform(get("/api/jobs").param("page", "0").param("size", "10"))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$[0].title").value("Software Engineer"))
-            .andExpect(jsonPath("$[1].title").value("Product Manager"));
+            .andExpect(jsonPath("$.content[0].title").value("Software Engineer"))
+            .andExpect(jsonPath("$.content[1].title").value("Product Manager"));
   }
 
   @Test

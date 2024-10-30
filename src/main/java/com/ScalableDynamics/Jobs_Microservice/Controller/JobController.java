@@ -1,5 +1,7 @@
 package com.ScalableDynamics.Jobs_Microservice.Controller;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import com.ScalableDynamics.Jobs_Microservice.Model.Job;
 import com.ScalableDynamics.Jobs_Microservice.Service.JobService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,8 +23,9 @@ public class JobController {
 
   @Operation(summary = "Get all jobs", description = "Retrieve a list of all available job postings")
   @GetMapping
-  public List<Job> getAllJobs() {
-    return jobService.getAllJobs();
+  public ResponseEntity<?> getAllJobs(Pageable pageable) {
+    Page<Job> jobs = jobService.getAllJobs(pageable);
+    return ResponseEntity.ok(jobs);
   }
 
   @Operation(summary = "Get a job by ID", description = "Retrieve details of a job by its ID")
