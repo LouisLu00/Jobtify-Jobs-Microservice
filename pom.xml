@@ -98,12 +98,16 @@
 				<artifactId>jib-maven-plugin</artifactId>
 				<version>3.3.1</version>
 				<configuration>
+					<from>
+						<platforms>
+							<platform>
+								<architecture>arm64</architecture>
+								<os>linux</os>
+							</platform>
+						</platforms>
+					</from>
 					<to>
-						<image>louislu00/jobs-microservice:latest</image>
-						<auth>
-							<username>${env.DOCKER_USERNAME}</username>
-							<password>${env.DOCKER_PASSWORD}</password>
-						</auth>
+						<image>louislu000/jobs-microservice:latest</image>
 					</to>
 				</configuration>
 			</plugin>

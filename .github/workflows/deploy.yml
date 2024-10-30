@@ -1,0 +1,31 @@
+name: DockerHub-Upload
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  dockerhub-upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build and Push Docker Image with Jib
+        env:
+          REGISTRY_USERNAME: ${{ secrets.DOCKER_EMAIL }}
+          REGISTRY_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          mvn compile jib:build \
+            -Dimage=louislu000/jobs-microservice:latest \
+            -Djib.to.auth.username=$REGISTRY_USERNAME \
+            -Djib.to.auth.password=$REGISTRY_PASSWORD
+
+    
