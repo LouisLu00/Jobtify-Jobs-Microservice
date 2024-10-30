@@ -1,6 +1,7 @@
 package com.ScalableDynamics.Jobs_Microservice.Controller;
 
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -220,14 +221,46 @@ public class JobController {
   }
 
 
+  @Operation(
+          summary = "Asynchronously update job applicant count (increase by 1)",
+          description = "Increment the applicant count for a specified job by 1 asynchronously. Returns a 202 Accepted response with a URI to check the job's status."
+  )
+  @ApiResponses(value = {
+          @ApiResponse(
+                  responseCode = "202",
+                  description = "Job applicant count update accepted for asynchronous processing",
+                  content = @Content,
+                  headers = @Header(
+                          name = "Location",
+                          description = "URI to check the job's status",
+                          schema = @Schema(type = "string")
+                  )
+          ),
+          @ApiResponse(
+                  responseCode = "404",
+                  description = "Job not found",
+                  content = @Content
+          ),
+          @ApiResponse(
+                  responseCode = "500",
+                  description = "Server error",
+                  content = @Content
+          )
+  })
   @PostMapping("/async/update/{jobId}")
-  public ResponseEntity<Void> addJobAsync(@PathVariable Long jobId) {
+  public ResponseEntity<Void> addJobAsync(
+          @Parameter(description = "ID of the job to be updated", example = "1", required = true)
+          @PathVariable Long jobId) {
+
     Optional<Job> optionalJob = jobService.getJobById(jobId);
-    if(! optionalJob.isPresent()) {
+    if (!optionalJob.isPresent()) {
       return ResponseEntity.notFound().build();
     }
+
     Job job = optionalJob.get();
     jobService.updateJobApplicantCountAsync(job, "/api/jobs/default-job-completion-callback");
+
+    // Build URI for checking job status
     URI statusUri = ServletUriComponentsBuilder.fromCurrentContextPath()
             .path("/api/jobs/status/{id}")
             .buildAndExpand(jobId)
