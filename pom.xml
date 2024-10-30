@@ -99,10 +99,15 @@
 				<version>3.3.1</version>
 				<configuration>
 					<from>
-						<image>eclipse-temurin:17-jre</image> <!-- multi-architecture image -->
+						<platforms>
+							<platform>
+								<architecture>arm64</architecture>
+								<os>linux</os>
+							</platform>
+						</platforms>
 					</from>
 					<to>
-						<image>louislu00/jobs-microservice:latest</image>
+						<image>louislu000/jobs-microservice:latest</image>
 					</to>
 				</configuration>
 			</plugin>
