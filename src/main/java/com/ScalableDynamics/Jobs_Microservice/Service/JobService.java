@@ -3,6 +3,8 @@ package com.ScalableDynamics.Jobs_Microservice.Service;
 import com.ScalableDynamics.Jobs_Microservice.Model.Job;
 import com.ScalableDynamics.Jobs_Microservice.Repository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +16,8 @@ public class JobService {
   @Autowired
   private JobRepository jobRepository;
 
-  public List<Job> getAllJobs() {
-    return jobRepository.findAll();
+  public Page<Job> getAllJobs(Pageable pageable) {
+    return jobRepository.findAll(pageable);
   }
   // Get job by ID
   public Optional<Job> getJobById(Long id) {
