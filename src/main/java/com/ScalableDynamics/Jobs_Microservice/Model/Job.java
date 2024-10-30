@@ -1,10 +1,7 @@
 package com.ScalableDynamics.Jobs_Microservice.Model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
@@ -30,4 +27,8 @@ public class Job {
   private String location;
 
   private String industry;
+
+  private String status;
+
+  private int applicantCount;
 }
