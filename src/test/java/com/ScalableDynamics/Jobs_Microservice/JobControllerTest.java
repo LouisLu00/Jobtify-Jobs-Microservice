@@ -40,8 +40,8 @@ public class JobControllerTest {
 
   @Test
   public void testGetAllJobs() throws Exception {
-    Job job1 = new Job(1L, true, "Tech Corp", "Software Engineer", "Develops software", 120000, "New York", "IT", Job.Status.ACTIVE, 0);
-    Job job2 = new Job(2L, true, "Product Corp", "Product Manager", "Manages products", 110000, "San Francisco", "IT", Job.Status.ACTIVE, 0);
+    Job job1 = new Job(1L, true, "Tech Corp", "Software Engineer", "Develops software", 120000, "New York", "IT", Job.Status.ACTIVE, 0, 36.2, 32.1);
+    Job job2 = new Job(2L, true, "Product Corp", "Product Manager", "Manages products", 110000, "San Francisco", "IT", Job.Status.ACTIVE, 0, 36.2, 32.1);
 
     // Mock paginated response
     Pageable pageable = PageRequest.of(0, 10); // Page 0 with a size of 10
@@ -58,7 +58,7 @@ public class JobControllerTest {
   @Test
   public void testAddJob() throws Exception {
     // Create a Job instance with all required fields and the enum status
-    Job job = new Job(1L, true, "Tech Corp", "Software Engineer", "Develops software", 120000, "New York", "IT", Job.Status.ACTIVE, 0);
+    Job job = new Job(1L, true, "Tech Corp", "Software Engineer", "Develops software", 120000, "New York", "IT", Job.Status.ACTIVE, 0, 36.2, 32.1);
 
     // Mock the service to return the job when called
     when(jobService.addJob(any(Job.class))).thenReturn(job);
@@ -86,7 +86,7 @@ public class JobControllerTest {
 
   @Test
   public void testUpdateJob() throws Exception {
-    Job updatedJob = new Job(1L, true, "Updated Corp", "Senior Engineer", "Leads development", 150000, "San Francisco", "IT", Job.Status.ACTIVE, 0);
+    Job updatedJob = new Job(1L, true, "Updated Corp", "Senior Engineer", "Leads development", 150000, "San Francisco", "IT", Job.Status.ACTIVE, 0, 36.2, 32.1);
     when(jobService.updateJob(Mockito.eq(1L), any(Job.class))).thenReturn(Optional.of(updatedJob));
 
     mockMvc.perform(put("/api/jobs/1")
