@@ -71,6 +71,8 @@ public class JobService {
       job.setLocation(jobDetails.getLocation());
       job.setCompany(jobDetails.getCompany());
       job.setSalary(jobDetails.getSalary());
+      job.setLongitude(jobDetails.getLongitude());
+      job.setLatitude(jobDetails.getLongitude());
       return jobRepository.save(job);
     });
   }
