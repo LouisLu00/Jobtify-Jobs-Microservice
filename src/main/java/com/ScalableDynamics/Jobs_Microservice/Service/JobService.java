@@ -66,16 +66,35 @@ public class JobService {
   // Update an existing job
   public Optional<Job> updateJob(Long id, Job jobDetails) {
     return jobRepository.findById(id).map(job -> {
-      job.setTitle(jobDetails.getTitle());
-      job.setDescription(jobDetails.getDescription());
-      job.setLocation(jobDetails.getLocation());
-      job.setCompany(jobDetails.getCompany());
-      job.setSalary(jobDetails.getSalary());
-      job.setLongitude(jobDetails.getLongitude());
-      job.setLatitude(jobDetails.getLongitude());
+
+      if (jobDetails.getTitle() != null) {
+        job.setTitle(jobDetails.getTitle());
+      }
+      if (jobDetails.getDescription() != null) {
+        job.setDescription(jobDetails.getDescription());
+      }
+      if (jobDetails.getLocation() != null) {
+        job.setLocation(jobDetails.getLocation());
+      }
+      if (jobDetails.getCompany() != null) {
+        job.setCompany(jobDetails.getCompany());
+      }
+      if (jobDetails.getSalary() > 0) { // Assuming salary should be positive
+        job.setSalary(jobDetails.getSalary());
+      }
+      if (jobDetails.getLongitude() != null) {
+        job.setLongitude(jobDetails.getLongitude());
+      }
+      if (jobDetails.getLatitude() != null) {
+        job.setLatitude(jobDetails.getLatitude());
+      }
+      if (jobDetails.getJobLink() != null) {
+        job.setJobLink(jobDetails.getJobLink());
+      }
       return jobRepository.save(job);
     });
   }
+
 
   // Delete a job
   public boolean deleteJob(Long id) {
