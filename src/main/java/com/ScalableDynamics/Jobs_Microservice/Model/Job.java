@@ -51,6 +51,12 @@ public class Job implements Serializable {
   @Column(nullable = false)
   private int applicantCount = 0; // Default value: 0
 
+  @Column(nullable = true)
+  private Double latitude;
+
+  @Column(nullable = true)
+  private Double longitude;
+
   public enum Status {
     PENDING,
     ACTIVE,
