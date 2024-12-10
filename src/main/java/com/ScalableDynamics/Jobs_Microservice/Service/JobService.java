@@ -66,6 +66,7 @@ public class JobService {
   // Update an existing job
   public Optional<Job> updateJob(Long id, Job jobDetails) {
     return jobRepository.findById(id).map(job -> {
+
       if (jobDetails.getTitle() != null) {
         job.setTitle(jobDetails.getTitle());
       }
